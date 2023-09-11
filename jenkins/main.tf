@@ -1,6 +1,6 @@
 resource "google_compute_instance" "default" {
   name         = "jenkins-vm"
-  project      = "gcp-terraform-env"
+  project      = "terraform-project-100"
   machine_type = "e2-small"
   zone         = "us-east4-a"
 
