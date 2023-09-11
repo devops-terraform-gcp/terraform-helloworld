@@ -49,4 +49,4 @@ jobs:
       run: terraform validate
 
     - name: terraform plan
-      run: terraform plan $GOOGLE_APPLICATION_CREDENTIAL
+      run: terraform plan
