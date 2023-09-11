@@ -4,9 +4,6 @@ on:
   push:
     branches: [ "main" ]
 
-env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-
 jobs:
   setup-prepare-list:
     name: Setup, Prepare,
