@@ -1,13 +1,13 @@
-# data "google_billing_account" "acct" {
-#   display_name = "My Billing Account"
-#   open         = true
-# }
+data "google_billing_account" "acct" {
+  display_name = "My Billing Account"
+  open         = true
+}
 
-# resource "google_project" "my_project" {
-#   name            = var.name
-#   project_id      = var.project
-#   billing_account = data.google_billing_account.acct.id
-# }
+resource "google_project" "my_project" {
+  name            = var.name
+  project_id      = var.project
+  billing_account = data.google_billing_account.acct.id
+}
 
 resource "google_project_service" "gcp_services" {
   count                      = length(var.gcp_service_list)
