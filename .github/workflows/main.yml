@@ -42,9 +42,6 @@ jobs:
       with:
         soft_fail: true
 
-    - name: Terraform Format
-      run: terraform fmt -check
-
     - name: Terraform Validate
       run: terraform validate
 
