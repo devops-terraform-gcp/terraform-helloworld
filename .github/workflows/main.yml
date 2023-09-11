@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  project: ${{ secrets.GCP_PROJECT_ID }}
+
 jobs:
   setup-prepare-list:
     name: Setup, Prepare,
@@ -49,4 +52,4 @@ jobs:
       run: terraform validate
 
     - name: terraform plan
-      run: terraform plan -var="project_id==${{ secrets.GCP_PROJECT_ID }}"
+      run: terraform plan -var="project==${{ secrets.GCP_PROJECT_ID }}"
