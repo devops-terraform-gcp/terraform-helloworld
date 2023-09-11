@@ -14,9 +14,6 @@ resource "google_project_service" "gcp_services" {
   project                    = var.project
   service                    = var.gcp_service_list[count.index]
   disable_dependent_services = true
-  depends_on = [
-    google_project.my_project
-  ]
 }
 
 resource "null_resource" "run_script" {
@@ -24,7 +21,7 @@ resource "null_resource" "run_script" {
     command = "/bin/bash docker-build.sh"
   }
   depends_on = [
-    google_project.my_project, google_project_service.gcp_services
+    google_project_service.gcp_services
   ]
 }
 
@@ -83,9 +80,6 @@ resource "google_monitoring_alert_policy" "alert_policy" {
   user_labels = {
     foo = "bar"
   }
-  depends_on = [
-    google_project.my_project
-  ]
 }
 
 
@@ -111,9 +105,6 @@ resource "google_monitoring_uptime_check_config" "https" {
   content_matchers {
     content = "example"
   }
-  depends_on = [
-    google_project.my_project
-  ]
 }
 
 resource "google_monitoring_dashboard" "dashboard" {
@@ -130,9 +121,6 @@ resource "google_monitoring_dashboard" "dashboard" {
 }
 
 EOF
-  depends_on = [
-    google_project.my_project
-  ]
 }
 
 output "url" {
