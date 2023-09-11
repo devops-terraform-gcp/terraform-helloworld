@@ -47,8 +47,3 @@ jobs:
 
     - name: Terraform Validate
       run: terraform validate
-
-    - name: terraform plan
-      run: terraform plan
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}

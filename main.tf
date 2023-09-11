@@ -1,13 +1,13 @@
-# data "google_billing_account" "acct" {
-#   display_name = "My Billing Account"
-#   open         = true
-# }
+data "google_billing_account" "acct" {
+  display_name = "My Billing Account"
+  open         = true
+}
 
-# resource "google_project" "my_project" {
-#   name            = var.name
-#   project_id      = var.project
-#   billing_account = data.google_billing_account.acct.id
-# }
+resource "google_project" "my_project" {
+  name            = var.name
+  project_id      = var.project
+  billing_account = data.google_billing_account.acct.id
+}
 
 resource "google_project_service" "gcp_services" {
   count                      = length(var.gcp_service_list)
@@ -88,7 +88,7 @@ resource "google_monitoring_uptime_check_config" "https" {
   timeout      = "60s"
 
   http_check {
-    path         = "/gcp-terraform-env/app"
+    path         = "/terraform-env-100/app"
     port         = "443"
     use_ssl      = true
     validate_ssl = true
