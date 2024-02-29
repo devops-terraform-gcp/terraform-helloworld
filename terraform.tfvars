@@ -7,5 +7,6 @@ zone     = "us-east4-a"
 name     = "Terraform Project"
 gcp_service_list = [
   "iam.googleapis.com",
-  "containerregistry.googleapis.com"
+  "containerregistry.googleapis.com",
+  "artifactregistry.googleapis.com"
 ]

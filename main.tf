@@ -16,7 +16,7 @@ resource "google_project_service" "gcp_services" {
   disable_dependent_services = true
 }
 
-resource "null_resource" "run_script" {
+resource "terraform_data" "run_script" {
   provisioner "local-exec" {
     command = "/bin/bash docker-build.sh"
   }
@@ -30,7 +30,7 @@ resource "google_project_service" "run_api" {
   service = "run.googleapis.com"
 
   disable_on_destroy = true
-  depends_on         = [null_resource.run_script]
+  depends_on         = [terraform_data.run_script]
 }
 
 resource "google_cloud_run_service" "webapp" {

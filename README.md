@@ -13,47 +13,35 @@
 ### Installation
 -  Install `Terraform on Linux(Ubuntu)`
 	```
-	sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+	sudo apt update && sudo apt upgrade -y
+	sudo ln -sf $(which python3) /usr/bin/python && sudo apt install python3-venv -y && sudo apt install unzip -y
+	python -m venv venv && source venv/bin/activate
+	./scripts/install-terraform.sh 
+	source venv/bin/activate
 	```
-	```
-	curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-	```
-	```
-	sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-	```
-	```
-	sudo apt-get update && sudo apt-get install terraform
-	```
-	
-- Install specific `Terraform version on Linux(Ubuntu)`
-	```
-	curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-        sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-        sudo apt-get update
-        sudo apt-get install terraform=1.1.8
-	```
+
 - Verify Terraform is installed
 	```
 	terraform --version
 	```
 	
 ### Terraform-docs
-```
-curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-tar -xzf terraform-docs.tar.gz
-chmod +x terraform-docs
-sudo mv terraform-docs /usr/local/bin/
-```
+	```
+	curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+	tar -xzf terraform-docs.tar.gz
+	chmod +x terraform-docs
+	sudo mv terraform-docs /usr/local/bin/
+	```
 
 
-### Run docker as root
+<!-- ### Run docker as root
 ```	
 sudo -s
-```
+``` -->
 
 ### Install `gcloud` and `authenticate using Google CLI`
 ```
-sudo apt-get install apt-transport-https ca-certificates gnupg
+sudo apt-get install apt-transport-https ca-certificates gnupg -y
 ```
 ```
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
@@ -64,22 +52,31 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyr
 ```
 sudo apt-get update && sudo apt-get install google-cloud-cli
 ```
-```
-gcloud init
-```
+
 - Log in into `GCP`
-```
-gcloud auth login
-gcloud auth configure-docker
-```
+	```
+	gcloud auth application-default login
+	gcloud auth configure-docker
+	```
+- Enable Docker Desktop WSL (optional)
+	1. Open Docker Desktop and enable WSL integration
+
+		![docker wsl integration](./docs/docker-wsl2.png)
+
+	2. Run the command to add user to docker group
+	```
+	sudo usermod -aG docker $USER
+	sudo chown $USER /var/run/docker.sock
+	```
+
 
 ### Install `Node.js 14` and `npm`
-```
-curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
-```
-```
-sudo apt-get install -y nodejs
-```
+	```
+	curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+	```
+	```
+	sudo apt-get install -y nodejs
+	```
 ### Infrastructure as Code - IaC
 - Terraform v1.1.5
 
