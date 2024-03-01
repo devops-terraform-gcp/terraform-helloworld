@@ -19,10 +19,17 @@ resource "google_project_service" "gcp_services" {
 resource "terraform_data" "run_script" {
   provisioner "local-exec" {
     command = "/bin/bash docker-build.sh"
+    environment = {
+      "env" = "${random_id.unique.hex}"
+    }
   }
   depends_on = [
     google_project_service.gcp_services
   ]
+}
+
+resource "random_id" "unique" {
+  byte_length = 3
 }
 
 # Enables the Cloud Run API
@@ -34,13 +41,13 @@ resource "google_project_service" "run_api" {
 }
 
 resource "google_cloud_run_service" "webapp" {
-  name     = var.project
+  name     = "${var.project}-${random_id.unique.hex}"
   location = var.location
 
   template {
     spec {
       containers {
-        image = var.image
+        image = "gcr.io/${var.project}-${random_id.unique.hex}/app"
       }
     }
   }
@@ -87,8 +94,8 @@ resource "google_monitoring_uptime_check_config" "https" {
   display_name = "Terraform New Uptime Check"
   timeout      = "60s"
 
-  http_check {
-    path         = "/terraform-env-100/app"
+  http_check { #/terraform-env-100/app
+    path         = "/${var.project}-${random_id.unique.hex}/app"
     port         = "443"
     use_ssl      = true
     validate_ssl = true
