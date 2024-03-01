@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "google" {
-  project = var.project
+  project = "${var.project}-${random_id.unique.hex}"
   region  = var.region
   zone    = var.zone
 }
