@@ -16,7 +16,7 @@ resource "google_project_service" "gcp_services" {
   disable_dependent_services = true
 }
 
-resource "terraform_data" "run_script" {
+resource "null_resource" "run_script" {
   provisioner "local-exec" {
     command = "/bin/bash docker-build.sh"
     environment = {
@@ -30,14 +30,6 @@ resource "terraform_data" "run_script" {
 
 resource "random_id" "unique" {
   byte_length = 3
-}
-
-# Enables the Cloud Run API
-resource "google_project_service" "run_api" {
-  service = "run.googleapis.com"
-
-  disable_on_destroy = true
-  depends_on         = [terraform_data.run_script]
 }
 
 resource "google_cloud_run_service" "webapp" {
@@ -94,7 +86,7 @@ resource "google_monitoring_uptime_check_config" "https" {
   display_name = "Terraform New Uptime Check"
   timeout      = "60s"
 
-  http_check { #/terraform-env-100/app
+  http_check {
     path         = "/${var.project}-${random_id.unique.hex}/app"
     port         = "443"
     use_ssl      = true

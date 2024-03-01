@@ -33,12 +33,6 @@
 	sudo mv terraform-docs /usr/local/bin/
 	```
 
-
-<!-- ### Run docker as root
-```	
-sudo -s
-``` -->
-
 ### Install `gcloud` and `authenticate using Google CLI`
 ```
 sudo apt-get install apt-transport-https ca-certificates gnupg -y
@@ -78,7 +72,7 @@ sudo apt-get update && sudo apt-get install google-cloud-cli
 	sudo apt-get install -y nodejs
 	```
 ### Infrastructure as Code - IaC
-- Terraform v1.1.5
+- Terraform v1.3.5 and above
 
 ### Programming Language
 - JavaScript
@@ -122,46 +116,11 @@ Some steps before running the commands
 On your local machine, <br />
 3.	Enable Docker Desktop. <br />
 
-
-Then, update the following scripts <br />
-4. Update the docker Hostname
-
- **docker-build.sh**
- ```
-	for example, mine is: gcr.io/cellular-dream-342220/app
-	yours can be: gcr.io/Project_ID/app
-```
-5.	on the **terraform.tfvars**, update the following:
-	```
-	project	= "Project_ID"
-	image	= "gcr.io/Poject_ID/app"
-	```
-6.	on the **main.tf**, line 70 of 
-	```
-	resource "google_monitoring_uptime_check_config" "https" {
-		display_name = "Terraform Uptime Check"
-  		timeout      = "60s"
-
-		http_check {
-			path         = "/cellular-dream-342220/app"
-			port         = "443"
-			use_ssl      = true
-			validate_ssl = true
-		}
-	}
-
-	```
-
-```
-update "path" to -> path = "/Project_ID/app"
-```
-
-
-7. on the WSL command line, run:
+4. on the WSL command line, run:
 	-	terraform init
 	- 	terraform plan
 	-	terraform apply, enter: yes
 
-8. Allow application to run. After a few minutes, it deploys the WebApp to GCP.
-9. A URL is created on the command line.
-10. Click on the the URL. It opens a browser with "Hello World" message.
+5. Allow application to run. After a few minutes, it deploys the WebApp to GCP.
+6. A URL is created on the command line.
+7. Click on the the URL. It opens a browser with "Hello World" message.

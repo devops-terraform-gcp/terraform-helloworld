@@ -8,5 +8,7 @@ name     = "Terraform Project"
 gcp_service_list = [
   "iam.googleapis.com",
   "containerregistry.googleapis.com",
-  "artifactregistry.googleapis.com"
+  "artifactregistry.googleapis.com",
+  "compute.googleapis.com",
+  "run.googleapis.com"
 ]
